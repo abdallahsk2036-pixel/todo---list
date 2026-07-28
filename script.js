@@ -5,7 +5,7 @@ function addTask() {
   
   let li = document.createElement("li");
   li.textContent = task;
-  li.onclick = function() { this.remove(); } // لما تضغط على المهمة تنحذف
+  li.onclick = function() { this.remove(); } // اضغط على المهمة عشان تنحذف
   document.getElementById("taskList").appendChild(li);
   input.value = "";
 }

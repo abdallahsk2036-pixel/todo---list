@@ -4,31 +4,54 @@
 <meta charset="UTF-8">
 <title>قائمة المهام</title>
 <style>
-body{font-family:sans-serif;background:#f5f5f5;padding:20px;text-align:center}
-input,button{padding:10px;margin:5px;border-radius:5px;border:1px solid #ccc}
-button{background:#4CAF50;color:white;cursor:pointer}
-li{background:white;padding:10px;margin:5px;list-style:none;border-radius:5px;cursor:pointer}
-li.done{text-decoration:line-through;color:gray}
+body{font-family:sans-serif;background:#f4f4f4;padding:20px;text-align:center}
+input{padding:10px;width:60%}
+button{padding:10px 15px;background:green;color:white;border:none;border-radius:5px}
+li{background:white;padding:10px;margin:5px 0;list-style:none;cursor:pointer;border-radius:5px}
+.done{text-decoration:line-through;color:gray}
 </style>
 </head>
 <body>
-<h1>📝 قائمة المهام</h1>
+<h1>قائمة المهام 📝</h1>
 <input id="task" placeholder="اكتب مهمة جديدة">
 <button onclick="addTask()">إضافة</button>
 <ul id="list"></ul>
 
 <script>
+let list = document.getElementById('list');
+
+// نجيب المهام المحفوظة اول ما نفتح الصفحة
+window.onload = function(){
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(t => createLi(t.text, t.done));
+}
+
 function addTask(){
-  let t=document.getElementById('task').value;
-  if(t==='')return;
-  let li=document.createElement('li');
-  li.textContent=t;
-  li.onclick=function(){this.classList.toggle('done')};
-  document.getElementById('list').appendChild(li);
+  let t = document.getElementById('task').value;
+  if(t==='') return;
+  createLi(t, false);
+  saveTasks();
   document.getElementById('task').value='';
+}
+
+function createLi(text, done){
+  let li = document.createElement('li');
+  li.innerText = text;
+  if(done) li.classList.add('done');
+  li.onclick = function(){
+    this.classList.toggle('done');
+    saveTasks();
+  }
+  list.appendChild(li);
+}
+
+function saveTasks(){
+  let tasks = [];
+  document.querySelectorAll('#list li').forEach(li => {
+    tasks.push({text: li.innerText, done: li.classList.contains('done')});
+  });
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 </script>
 </body>
 </html>
-
- 

@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>قائمة المهام</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>قائمة المهام</title>
 </head>
 <body>
-  <div class="container">
-    <h1>📝 قائمة المهام الخاصة بي</h1>
-    <div class="add-task">
-      <input type="text" id="taskInput" placeholder="اكتب مهمة جديدة...">
-      <button onclick="addTask()">إضافة</button>
-    </div>
-    <ul id="taskList"></ul>
-  </div>
-  <script src="script.js"></script>
+<h1>📝 قائمة المهام</h1>
+<input id="task" placeholder="اكتب مهمة جديدة">
+<button onclick="addTask()">إضافة</button>
+<ul id="list"></ul>
+<script>
+function addTask(){
+  let t=document.getElementById('task').value;
+  if(t==='')return;
+  let li=document.createElement('li');
+  li.textContent=t;
+  li.onclick=function(){this.classList.toggle('done')};
+  document.getElementById('list').appendChild(li);
+  document.getElementById('task').value='';
+}
+</script>
 </body>
 </html>
